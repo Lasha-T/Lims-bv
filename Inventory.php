@@ -24,6 +24,11 @@
 
             </tbody>
           </table>
+
+          <div id="pagination">
+              <!-- Pagination controls will be generated here -->
+          </div>
+
           <!-- content ends here -->
         </div>
     </div>
