@@ -1,0 +1,94 @@
+/* shared.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e7e8e8;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #473f35;
+    color: #fff;
+    padding: 5px 5px;
+}
+
+#logout-button {
+    margin-right: 10px;
+}
+
+header h3 {
+    text-align: center;
+    flex-grow: 1;
+    margin: 10px 0px;
+}
+
+h4 {
+    margin: 5px 0;
+}
+
+.main-container {
+    display: flex;
+}
+
+.menu {
+    background-color: #504f4d;
+    color: #fff;
+    width: 4%;
+    min-height: 100vh;
+    transition: width 0.5s; /* Slower transition effect */
+    overflow: hidden;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.menu-items li {
+    cursor: pointer;
+    padding: 7px 15px;
+    text-transform: uppercase;
+    font-size: 16px; /* Default font size when the menu is collapsed */
+    transition: 0.5s;
+    position: relative;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.menu-items li:hover {
+    color: #ffd56e; /* Change the text color on hover */
+    box-shadow: 2px 2px 5px rgba(255, 255, 255, 0.4); /* white box shadow on hover */
+}
+
+.menu-items li a {
+    color: #0074D9;
+    text-decoration: none;
+    user-select: none;
+}
+
+.menu-collapsed .menu-items  {
+    display: block; /* Show the 1st symbol when the menu is collapsed */
+}
+
+.container {
+    flex: 1;
+    padding: 15px;
+    user-select: none;
+}
+
+#menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    padding-left: 15px;
+    padding-top: 10px;
+    font-family: monospace;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}

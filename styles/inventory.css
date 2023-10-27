@@ -1,0 +1,41 @@
+/* inventory.css */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #5e5d5a;
+    color: #fff;
+    font-size: 14px;
+}
+
+td {
+    font-size: 12px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* styles for specific columns */
+.number-columns {
+    text-align: center;
+    width: 80px;
+}
+.name-column {
+    font-weight: bold;
+}
