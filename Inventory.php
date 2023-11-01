@@ -16,6 +16,7 @@
         <div class="container">
           <!-- content starts from here-->
           <h4>Inventory</h4>
+          <div id="table-controls"></div>
           <table id="inventory-table">
             <thead>
 
@@ -26,9 +27,8 @@
           </table>
 
           <div id="pagination">
-              <!-- Pagination controls will be generated here -->
+              <!-- Page number buttons will be added dynamically -->
           </div>
-
           <!-- content ends here -->
         </div>
     </div>
