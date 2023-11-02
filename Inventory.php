@@ -16,18 +16,19 @@
         <div class="container">
           <!-- content starts from here-->
           <h4>Inventory</h4>
-          <div id="table-controls"></div>
+          <div id="table-controls">
+            <!-- controls created dynamically -->
+          </div>
           <table id="inventory-table">
             <thead>
-
+              <!-- header created dynamically -->
             </thead>
             <tbody>
-
+              <!-- pages created dynamically -->
             </tbody>
           </table>
-
           <div id="pagination">
-              <!-- Page number buttons will be added dynamically -->
+              <!-- Page buttons will be added dynamically -->
           </div>
           <!-- content ends here -->
         </div>

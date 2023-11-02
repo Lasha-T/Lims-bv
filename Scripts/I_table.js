@@ -4,18 +4,68 @@ const paginationDiv = document.getElementById('pagination');
 const itemsPerPage = 10; // Number of items to display per page
 let currentPage = 1;
 
+// Define columns To Exclude
+const keysToExclude = Object.keys(data[0]).slice(2); // Exclude the first two keys
+
+// Function to create show/hide controls dynamically
+function createControls() {
+    const tableControls = document.getElementById('table-controls');
+
+    keysToExclude.forEach(key => {
+        const label = document.createElement('label');
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.id = 'show-' + key;
+        checkbox.checked = true;
+        label.setAttribute('for', 'show-' + key);
+        label.appendChild(checkbox);
+        label.appendChild(document.createTextNode(key.charAt(0).toUpperCase() + key.slice(1)));
+        tableControls.appendChild(label);
+    });
+}
+
+createControls();
+
+let dataProcessed;
+function processDataBasedOnCheckboxes() {
+    let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
+    let newDataProcessed = JSON.parse(JSON.stringify(data));
+    newDataProcessed = newDataProcessed.map(item => {
+        keysToExclude.forEach((key, keyIndex) => {
+            if (checkboxes[keyIndex] && !checkboxes[keyIndex].checked) {
+                if (item.hasOwnProperty(key)) {
+                    delete item[key];
+                }
+            }
+        });
+        return item;
+    });
+    dataProcessed = newDataProcessed;
+    // generate table header and pages
+    generateTableHeader(dataProcessed);
+    updateTablePage(dataProcessed);
+}
+
+// Call the function when any of the checkboxes change
+let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
+checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', processDataBasedOnCheckboxes);
+});
+
+
 // Function to capitalize the first letter of a string
 function capitalizeFirstLetter(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Function to generate the table header (thead)
-function generateTableHeader(data) {
+function generateTableHeader(dataProcessed) {
     const thead = table.querySelector('thead');
+    thead.innerHTML = '';
     const headerRow = document.createElement('tr');
 
-    // Extract the column names from the first data object, excluding 'id'
-    const headers = Object.keys(data[0]).filter((headerText) => headerText !== 'id');
+    // Extract the column names from the first dataProcessed object, excluding 'id'
+    const headers = Object.keys(dataProcessed[0]).filter((headerText) => headerText !== 'id');
 
     headers.forEach((headerText) => {
         const header = document.createElement('th');
@@ -53,13 +103,13 @@ function generateTableRow(item) {
 }
 
 // Function to generate the table rows (tbody)
-function generateTableRows(data) {
+function generateTableRows(dataProcessed) {
     // Clear the table body
     tbody.innerHTML = '';
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    data.slice(startIndex, endIndex).forEach((item) => {
+    dataProcessed.slice(startIndex, endIndex).forEach((item) => {
         tbody.appendChild(generateTableRow(item));
     });
 }
@@ -74,16 +124,16 @@ function createPaginationButton(text, clickHandler, isDisabled = false) {
     return button;
 }
 
-function updatePagination(data) {
-    const totalPages = Math.ceil(data.length / itemsPerPage);
+function updatePagination(dataProcessed) {
+    const totalPages = Math.ceil(dataProcessed.length / itemsPerPage);
 
     paginationDiv.innerHTML = '';
 
     function addPageButton(text, page) {
         paginationDiv.appendChild(createPaginationButton(text, () => {
             currentPage = page;
-            updateTablePage(data);
-            updatePagination(data);
+            updateTablePage(dataProcessed);
+            updatePagination(dataProcessed);
         }, page === currentPage || page < 1 || page > totalPages));
     }
 
@@ -103,10 +153,9 @@ function updatePagination(data) {
 }
 
 // Function to update the table to display the current page
-function updateTablePage(data) {
-    generateTableRows(data);
-    updatePagination(data);
+function updateTablePage(dataProcessed) {
+    generateTableRows(dataProcessed);
+    updatePagination(dataProcessed);
 }
-
-generateTableHeader(data);
-updateTablePage(data);
+// Call the function on page load
+processDataBasedOnCheckboxes();
