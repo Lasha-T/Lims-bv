@@ -1,6 +1,14 @@
 /* inventory.css */
-#table-controls label{
-    margin-right: 5px;
+
+#table-controls input[type="checkbox"] {
+    transform: scale(0.8);
+    vertical-align: middle;
+    margin-right: 2px;
+}
+#table-controls label {
+    font-size: 0.8em;
+    vertical-align: middle;
+    margin-right: 6px;
 }
 
 table {
@@ -18,9 +26,9 @@ th, td {
 }
 
 th {
-    background-color: #5e5d5a;
+    background-color: #aba287;
     color: #fff;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 td {

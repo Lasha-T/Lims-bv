@@ -23,13 +23,14 @@ function createControls() {
         tableControls.appendChild(label);
     });
 }
-
 createControls();
 
+// Data processing function
 let dataProcessed;
-function processDataBasedOnCheckboxes() {
+function processData() {
     let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
     let newDataProcessed = JSON.parse(JSON.stringify(data));
+    //Columns Show/Hide part
     newDataProcessed = newDataProcessed.map(item => {
         keysToExclude.forEach((key, keyIndex) => {
             if (checkboxes[keyIndex] && !checkboxes[keyIndex].checked) {
@@ -41,15 +42,14 @@ function processDataBasedOnCheckboxes() {
         return item;
     });
     dataProcessed = newDataProcessed;
-    // generate table header and pages
-    generateTableHeader(dataProcessed);
+    // Generate table
     updateTablePage(dataProcessed);
 }
 
 // Call the function when any of the checkboxes change
 let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
 checkboxes.forEach(checkbox => {
-    checkbox.addEventListener('change', processDataBasedOnCheckboxes);
+    checkbox.addEventListener('change', processData);
 });
 
 
@@ -91,7 +91,7 @@ function generateTableRow(item) {
         const cell = document.createElement('td');
         cell.classList.add('td-' + colName);
 
-        if (['quantity', 'price', 'purchases', 'sales'].includes(colName)) {
+        if (!['productName', 'sku'].includes(colName)) {
             cell.classList.add('number-columns');
         }
 
@@ -153,9 +153,10 @@ function updatePagination(dataProcessed) {
 }
 
 // Function to update the table to display the current page
-function updateTablePage(dataProcessed) {
-    generateTableRows(dataProcessed);
-    updatePagination(dataProcessed);
+function updateTablePage(dataP) {
+    generateTableHeader(dataP);
+    generateTableRows(dataP);
+    updatePagination(dataP);
 }
 // Call the function on page load
-processDataBasedOnCheckboxes();
+processData();

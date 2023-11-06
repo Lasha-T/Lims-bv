@@ -32,3 +32,9 @@ JOIN
      SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10) AS t2
 -- Adjust the number of random records as needed
 LIMIT 100;
+
+ALTER TABLE products
+ADD COLUMN reserved INT NOT NULL;
+
+UPDATE products
+SET reserved = FLOOR(RAND() * 121);

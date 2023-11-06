@@ -1,4 +1,5 @@
 /* shared.css */
+
 body {
     font-family: Arial, sans-serif;
     background-color: #e7e8e8;
@@ -11,7 +12,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #473f35;
+    background-color: #c6914e;
     color: #fff;
     padding: 5px 5px;
 }
@@ -30,6 +31,9 @@ h4 {
     margin: 5px 0;
     text-align: center;
     font-family: auto;
+    font-size: large;
+    color: #b18e60;
+    background-color: #e0e0c4;
 }
 
 .main-container {
@@ -37,7 +41,7 @@ h4 {
 }
 
 .menu {
-    background-color: #504f4d;
+    background-color: #565045;
     color: #fff;
     width: 4%;
     min-height: 100vh;

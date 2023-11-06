@@ -13,9 +13,22 @@ $result = $conn->query($sql);
 
 $data = [];
 
+
 if ($result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
+        // Create a new row with columns in a different order
+        $newRow = [
+            'id' => $row['id'],
+            'productName' => $row['productName'],
+            'sku' => $row['sku'],
+            'price' => $row['price'],
+            'quantity' => $row['quantity'],
+            'reserved' => $row['reserved'],
+            'purchases' => $row['purchases'],
+            'sales' => $row['sales']
+        ];
+
+        $data[] = $newRow;
     }
 }
 
