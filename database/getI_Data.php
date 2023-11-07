@@ -19,7 +19,7 @@ if ($result->num_rows > 0) {
         // Create a new row with columns in a different order
         $newRow = [
             'id' => $row['id'],
-            'productName' => $row['productName'],
+            'name' => $row['productName'],
             'sku' => $row['sku'],
             'price' => $row['price'],
             'quantity' => $row['quantity'],

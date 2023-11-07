@@ -16,8 +16,18 @@
         <div class="container">
           <!-- content starts from here-->
           <h4>Inventory</h4>
-          <div id="table-controls">
-            <!-- controls created dynamically -->
+          <div id="controls-container">
+              <div id="table-controls">
+                  <!-- Controls will be generated dynamically here -->
+              </div>
+              <div id="search-container">
+                  <input type="text" id="search" placeholder="Search...">
+                  <span>in</span>
+                  <select id="selectSearch">
+                    <option value="name">Name</option>
+                    <!-- Options will be dynamically generated here -->
+                  </select>
+              </div>
           </div>
           <table id="inventory-table">
             <thead>

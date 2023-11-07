@@ -4,6 +4,7 @@ const paginationDiv = document.getElementById('pagination');
 const itemsPerPage = 10; // Number of items to display per page
 let currentPage = 1;
 
+
 // Define columns To Exclude
 const keysToExclude = Object.keys(data[0]).slice(2); // Exclude the first two keys
 
@@ -27,20 +28,63 @@ createControls();
 
 // Data processing function
 let dataProcessed;
+let selectedOption = "Name";
+const searchSelect = document.getElementById("selectSearch");
 function processData() {
-    let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
     let newDataProcessed = JSON.parse(JSON.stringify(data));
     //Columns Show/Hide part
-    newDataProcessed = newDataProcessed.map(item => {
+    const checkboxesArray = Array.from(checkboxes);
+    const anyCheckboxUnchecked = checkboxesArray.some(checkbox => !checkbox.checked);
+    if (anyCheckboxUnchecked) {
+      newDataProcessed = newDataProcessed.map(item => {
         keysToExclude.forEach((key, keyIndex) => {
-            if (checkboxes[keyIndex] && !checkboxes[keyIndex].checked) {
-                if (item.hasOwnProperty(key)) {
-                    delete item[key];
-                }
+          if (checkboxesArray[keyIndex] && !checkboxesArray[keyIndex].checked) {
+            if (item.hasOwnProperty(key)) {
+              delete item[key];
             }
+          }
         });
         return item;
+      });
+    }
+
+    dataProcessed = newDataProcessed;
+    // Generate table header
+    generateTableHeader(dataProcessed);
+
+
+    // Clear existing options (except the first one)
+    while (searchSelect.options.length > 1) {
+        searchSelect.remove(1);
+    }
+    // Iterate through checkboxes and add options for checked ones
+    checkboxesArray.forEach(function (checkbox) {
+        if (checkbox.checked) {
+            let option = document.createElement("option");
+            option.value = checkbox.id.replace("show-", ""); // Remove "show-" prefix
+            option.textContent = option.value.charAt(0).toUpperCase() + option.value.slice(1);
+            searchSelect.appendChild(option);
+        }
     });
+
+    // Check if selectedOption value exists in the options, if not, set it to "Name"
+    if (![...searchSelect.options].some(option => option.value === selectedOption)) {
+        selectedOption = "name";
+    }
+    // Set the selected option based on the selectedOption variable
+    searchSelect.value = selectedOption;
+
+    // filtering part
+    const searchText = searchInput.value.trim().toLowerCase();
+    if (searchText !== '') {
+      newDataProcessed = newDataProcessed.filter(item => {
+        if (selectedOption && item[selectedOption]) {
+          return item[selectedOption].toLowerCase().includes(searchText);
+        }
+        return true; // No filtering if no specific option is selected
+      });
+    }
+
     dataProcessed = newDataProcessed;
     // Generate table
     updateTablePage(dataProcessed);
@@ -50,6 +94,16 @@ function processData() {
 let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
 checkboxes.forEach(checkbox => {
     checkbox.addEventListener('change', processData);
+});
+
+// Call the function on search input
+const searchInput = document.getElementById('search');
+searchInput.addEventListener('input', processData);
+
+// Add an onchange event handler for searchSelect to update selectedOption
+searchSelect.addEventListener("change", function() {
+    selectedOption = searchSelect.value;
+    processData();
 });
 
 
@@ -91,7 +145,7 @@ function generateTableRow(item) {
         const cell = document.createElement('td');
         cell.classList.add('td-' + colName);
 
-        if (!['productName', 'sku'].includes(colName)) {
+        if (!['name', 'sku'].includes(colName)) {
             cell.classList.add('number-columns');
         }
 
@@ -154,7 +208,6 @@ function updatePagination(dataProcessed) {
 
 // Function to update the table to display the current page
 function updateTablePage(dataP) {
-    generateTableHeader(dataP);
     generateTableRows(dataP);
     updatePagination(dataP);
 }

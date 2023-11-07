@@ -1,5 +1,29 @@
 /* inventory.css */
-
+#controls-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0px;
+}
+#search-container {
+    margin-right: 5px;
+}
+#search-container input {
+    width: 120px;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 1px solid #aaa288;
+    outline: none;
+}
+#search-container span {
+    font-size: 13px;
+}
+#search-container select {
+    font-size: 12px;
+    border: none;
+    background: none;
+    outline: none;
+}
 #table-controls input[type="checkbox"] {
     transform: scale(0.8);
     vertical-align: middle;
@@ -54,8 +78,8 @@ tr:hover {
 
 /* pegination buttons style */
 .button-style {
-    font-size: 14px;
-    padding: 6px 12px;
+    font-size: 10px;
+    padding: 6px 10px;
     margin: 10px 2px;
 }
 #pagination {
