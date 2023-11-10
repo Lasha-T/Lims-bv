@@ -1,13 +1,7 @@
 const table = document.getElementById('inventory-table');
-const tbody = table.querySelector('tbody');
-const paginationDiv = document.getElementById('pagination');
-const itemsPerPage = 10; // Number of items to display per page
-let currentPage = 1;
-
 
 // Define columns To Exclude
 const keysToExclude = Object.keys(data[0]).slice(2); // Exclude the first two keys
-
 // Function to create show/hide controls dynamically
 function createControls() {
     const tableControls = document.getElementById('table-controls');
@@ -24,38 +18,26 @@ function createControls() {
         tableControls.appendChild(label);
     });
 }
-createControls();
 
-// Data processing function
-let dataProcessed;
-let selectedOption = "Name";
-const searchSelect = document.getElementById("selectSearch");
 
-function processData() {
-    let newDataProcessed = JSON.parse(JSON.stringify(data));
-    //Columns Show/Hide part starts here
-    const checkboxesArray = Array.from(checkboxes);
+function hideColumns(newDataProcessed, checkboxesArray) {
     const anyCheckboxUnchecked = checkboxesArray.some(checkbox => !checkbox.checked);
     if (anyCheckboxUnchecked) {
-      newDataProcessed = newDataProcessed.map(item => {
-        keysToExclude.forEach((key, keyIndex) => {
-          if (checkboxesArray[keyIndex] && !checkboxesArray[keyIndex].checked) {
-            if (item.hasOwnProperty(key)) {
-              delete item[key];
-            }
-          }
+        newDataProcessed = newDataProcessed.map(item => {
+            keysToExclude.forEach((key, keyIndex) => {
+                if (checkboxesArray[keyIndex] && !checkboxesArray[keyIndex].checked) {
+                    if (item.hasOwnProperty(key)) {
+                        delete item[key];
+                    }
+                }
+            });
+            return item;
         });
-        return item;
-      });
     }
+    return newDataProcessed;
+}
 
-    dataProcessed = newDataProcessed;
-    //Columns Show/Hide part ends here
-
-    // Generate table header
-    generateTableHeader(dataProcessed);
-
-    // search part starts here
+function updateSearchOptions(checkboxesArray) {
     // Clear existing options (except the first one)
     while (searchSelect.options.length > 1) {
         searchSelect.remove(1);
@@ -69,31 +51,90 @@ function processData() {
             searchSelect.appendChild(option);
         }
     });
+}
 
+function updateSelectedOption() {
     // Check if selectedOption value exists in the options, if not, set it to "Name"
     if (![...searchSelect.options].some(option => option.value === selectedOption)) {
         selectedOption = "name";
     }
     // Set the selected option based on the selectedOption variable
     searchSelect.value = selectedOption;
+}
 
+function applySearchFilter(newDataProcessed) {
     // filtering part
     const searchText = searchInput.value.trim().toLowerCase();
     if (searchText !== '') {
-      newDataProcessed = newDataProcessed.filter(item => {
-        if (selectedOption && item[selectedOption]) {
-          return item[selectedOption].toLowerCase().includes(searchText);
-        }
-        return true; // No filtering if no specific option is selected
-      });
+        newDataProcessed = newDataProcessed.filter(item => {
+            if (selectedOption && item[selectedOption]) {
+                return item[selectedOption].toLowerCase().includes(searchText);
+            }
+            return true; // No filtering if no specific option is selected
+        });
     }
+    return newDataProcessed;
+}
 
+let selected_Ids = [];
+function updateSelectedStatus(newDataProcessed) {
+    newDataProcessed.forEach(item => {
+        item.selected = selected_Ids.includes(item.id) ? 1 : 0;
+    });
+}
+
+createControls();
+
+// Data processing function
+let dataProcessed;
+let selectedOption = "Name";
+const searchSelect = document.getElementById("selectSearch");
+
+function processData() {
+    let newDataProcessed = JSON.parse(JSON.stringify(data));
+
+    // Columns Show/Hide part
+    const checkboxesArray = Array.from(checkboxes);
+    newDataProcessed = hideColumns(newDataProcessed, checkboxesArray);
     dataProcessed = newDataProcessed;
-    // search part ends here
+
+    // Generate table header
+    generateTableHeader(dataProcessed);
+
+    // read Selected Status
+    updateSelectedStatus(newDataProcessed);
+
+    // Search part
+    updateSearchOptions(checkboxesArray);
+    updateSelectedOption();
+    newDataProcessed = applySearchFilter(newDataProcessed);
+    dataProcessed = newDataProcessed;
 
     // Generate table
     updateTablePage(dataProcessed);
 }
+
+// Attach a click event listener to the table
+table.addEventListener('click', function (event) {
+    const target = event.target;
+    // Check if the clicked element is a cell within a row
+    if (target.tagName === 'TD' && target.parentElement.tagName === 'TR') {
+        const selectedRow = target.parentElement;
+        const dataId = selectedRow.getAttribute('data-id');
+        if (dataId) {
+            // Check if dataId is already in the selected_Ids array
+            const index = selected_Ids.indexOf(dataId);
+            if (index === -1) {
+                // DataId is not in the array, so add it
+                selected_Ids.push(dataId);
+            } else {
+                // DataId is already in the array, so remove it
+                selected_Ids.splice(index, 1);
+            }
+            processData();
+        }
+    }
+});
 
 // Call the function when any of the checkboxes change
 let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
@@ -110,7 +151,6 @@ searchSelect.addEventListener("change", function() {
     selectedOption = searchSelect.value;
     processData();
 });
-
 
 // Function to capitalize the first letter of a string
 function capitalizeFirstLetter(str) {
@@ -144,14 +184,22 @@ function generateTableRow(item) {
     const columns = Object.entries(item);
 
     columns.forEach(([colName, colValue]) => {
-        if (colName === 'id') {
-            return; // Skip the 'id' column
-        }
         const cell = document.createElement('td');
         cell.classList.add('td-' + colName);
 
         if (!['name', 'sku', 'descr'].includes(colName)) {
             cell.classList.add('number-columns');
+        }
+
+        if (colName === 'id') {
+            row.setAttribute('data-id', colValue); // Set data-id attribute for the row
+            return; // Skip creating a cell for 'id' column
+        }
+
+        if (colName === 'selected') {
+            if(colValue == 1)
+              row.classList.add('selectedRow');
+            return; // Skip creating a cell for 'selected' column
         }
 
         cell.textContent = colValue;
@@ -161,7 +209,10 @@ function generateTableRow(item) {
     return row;
 }
 
+
 // Function to generate the table rows (tbody)
+const tbody = table.querySelector('tbody');
+const itemsPerPage = 10; // Number of items to display per page
 function generateTableRows(dataProcessed) {
     // Clear the table body
     tbody.innerHTML = '';
@@ -182,6 +233,9 @@ function createPaginationButton(text, clickHandler, isDisabled = false) {
     button.disabled = isDisabled;
     return button;
 }
+
+const paginationDiv = document.getElementById('pagination');
+let currentPage = 1;
 
 function updatePagination(dataProcessed) {
     const totalPages = Math.ceil(dataProcessed.length / itemsPerPage);

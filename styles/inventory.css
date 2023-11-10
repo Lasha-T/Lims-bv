@@ -67,6 +67,12 @@ tr:hover {
     background-color: #ddd;
 }
 
+/* style for the selected row */
+#inventory-table .selectedRow {
+    color: white;
+    background-color: #8d7dad;
+}
+
 /* styles for specific columns */
 .number-columns {
     text-align: center;
@@ -75,6 +81,9 @@ tr:hover {
 .td-productName {
     font-weight: bold;
 }
+
+
+
 
 /* pegination buttons style */
 .button-style {
