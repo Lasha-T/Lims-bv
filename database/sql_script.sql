@@ -33,8 +33,22 @@ JOIN
 -- Adjust the number of random records as needed
 LIMIT 100;
 
+-- Add new column reserved
 ALTER TABLE products
 ADD COLUMN reserved INT NOT NULL;
 
 UPDATE products
 SET reserved = FLOOR(RAND() * 121);
+
+-- Add new column description
+ALTER TABLE products
+ADD COLUMN description VARCHAR(255) AFTER productName;
+
+UPDATE products
+SET description = CASE
+    WHEN RAND() < 0.2 THEN 'red'
+    WHEN RAND() < 0.4 THEN 'blue'
+    WHEN RAND() < 0.6 THEN 'green'
+    WHEN RAND() < 0.8 THEN 'yellow'
+    ELSE 'gray'
+END;

@@ -20,6 +20,7 @@ if ($result->num_rows > 0) {
         $newRow = [
             'id' => $row['id'],
             'name' => $row['productName'],
+            'descr' => $row['description'],
             'sku' => $row['sku'],
             'price' => $row['price'],
             'quantity' => $row['quantity'],

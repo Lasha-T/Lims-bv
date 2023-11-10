@@ -30,9 +30,10 @@ createControls();
 let dataProcessed;
 let selectedOption = "Name";
 const searchSelect = document.getElementById("selectSearch");
+
 function processData() {
     let newDataProcessed = JSON.parse(JSON.stringify(data));
-    //Columns Show/Hide part
+    //Columns Show/Hide part starts here
     const checkboxesArray = Array.from(checkboxes);
     const anyCheckboxUnchecked = checkboxesArray.some(checkbox => !checkbox.checked);
     if (anyCheckboxUnchecked) {
@@ -49,10 +50,12 @@ function processData() {
     }
 
     dataProcessed = newDataProcessed;
+    //Columns Show/Hide part ends here
+
     // Generate table header
     generateTableHeader(dataProcessed);
 
-
+    // search part starts here
     // Clear existing options (except the first one)
     while (searchSelect.options.length > 1) {
         searchSelect.remove(1);
@@ -86,6 +89,8 @@ function processData() {
     }
 
     dataProcessed = newDataProcessed;
+    // search part ends here
+
     // Generate table
     updateTablePage(dataProcessed);
 }
@@ -145,7 +150,7 @@ function generateTableRow(item) {
         const cell = document.createElement('td');
         cell.classList.add('td-' + colName);
 
-        if (!['name', 'sku'].includes(colName)) {
+        if (!['name', 'sku', 'descr'].includes(colName)) {
             cell.classList.add('number-columns');
         }
 
