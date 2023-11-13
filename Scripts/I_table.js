@@ -1,4 +1,3 @@
-const table = document.getElementById('inventory-table');
 
 // Define columns To Exclude
 const keysToExclude = Object.keys(data[0]).slice(2); // Exclude the first two keys
@@ -18,12 +17,12 @@ function createControls() {
         tableControls.appendChild(label);
     });
 }
+createControls();
 
-
-function hideColumns(newDataProcessed, checkboxesArray) {
+function hideColumns(dataProcessed, checkboxesArray) {
     const anyCheckboxUnchecked = checkboxesArray.some(checkbox => !checkbox.checked);
     if (anyCheckboxUnchecked) {
-        newDataProcessed = newDataProcessed.map(item => {
+        dataProcessed = dataProcessed.map(item => {
             keysToExclude.forEach((key, keyIndex) => {
                 if (checkboxesArray[keyIndex] && !checkboxesArray[keyIndex].checked) {
                     if (item.hasOwnProperty(key)) {
@@ -34,7 +33,7 @@ function hideColumns(newDataProcessed, checkboxesArray) {
             return item;
         });
     }
-    return newDataProcessed;
+    return dataProcessed;
 }
 
 function updateSearchOptions(checkboxesArray) {
@@ -62,59 +61,29 @@ function updateSelectedOption() {
     searchSelect.value = selectedOption;
 }
 
-function applySearchFilter(newDataProcessed) {
+function applySearchFilter(dataProcessed) {
     // filtering part
     const searchText = searchInput.value.trim().toLowerCase();
     if (searchText !== '') {
-        newDataProcessed = newDataProcessed.filter(item => {
+        dataProcessed = dataProcessed.filter(item => {
             if (selectedOption && item[selectedOption]) {
                 return item[selectedOption].toLowerCase().includes(searchText);
             }
             return true; // No filtering if no specific option is selected
         });
     }
-    return newDataProcessed;
+    return dataProcessed;
 }
 
 let selected_Ids = [];
-function updateSelectedStatus(newDataProcessed) {
-    newDataProcessed.forEach(item => {
+function updateSelectedStatus(dataProcessed) {
+    dataProcessed.forEach(item => {
         item.selected = selected_Ids.includes(item.id) ? 1 : 0;
     });
 }
 
-createControls();
-
-// Data processing function
-let dataProcessed;
-let selectedOption = "Name";
-const searchSelect = document.getElementById("selectSearch");
-
-function processData() {
-    let newDataProcessed = JSON.parse(JSON.stringify(data));
-
-    // Columns Show/Hide part
-    const checkboxesArray = Array.from(checkboxes);
-    newDataProcessed = hideColumns(newDataProcessed, checkboxesArray);
-    dataProcessed = newDataProcessed;
-
-    // Generate table header
-    generateTableHeader(dataProcessed);
-
-    // read Selected Status
-    updateSelectedStatus(newDataProcessed);
-
-    // Search part
-    updateSearchOptions(checkboxesArray);
-    updateSelectedOption();
-    newDataProcessed = applySearchFilter(newDataProcessed);
-    dataProcessed = newDataProcessed;
-
-    // Generate table
-    updateTablePage(dataProcessed);
-}
-
 // Attach a click event listener to the table
+const table = document.getElementById('inventory-table');
 table.addEventListener('click', function (event) {
     const target = event.target;
     // Check if the clicked element is a cell within a row
@@ -144,9 +113,13 @@ checkboxes.forEach(checkbox => {
 
 // Call the function on search input
 const searchInput = document.getElementById('search');
-searchInput.addEventListener('input', processData);
-
+searchInput.addEventListener('input', function() {
+    currentPage = 1;
+    processData();
+});
 // Add an onchange event handler for searchSelect to update selectedOption
+let selectedOption = "Name";
+const searchSelect = document.getElementById("selectSearch");
 searchSelect.addEventListener("change", function() {
     selectedOption = searchSelect.value;
     processData();
@@ -246,10 +219,8 @@ function updatePagination(dataProcessed) {
         paginationDiv.appendChild(createPaginationButton(text, () => {
             currentPage = page;
             updateTablePage(dataProcessed);
-            updatePagination(dataProcessed);
         }, page === currentPage || page < 1 || page > totalPages));
     }
-
 
     const startPage = Math.max(1, currentPage - 2);
     const endPage = Math.min(totalPages, startPage + 4);
@@ -269,6 +240,29 @@ function updatePagination(dataProcessed) {
 function updateTablePage(dataP) {
     generateTableRows(dataP);
     updatePagination(dataP);
+}
+
+// Data processing function
+function processData() {
+    let dataProcessed = JSON.parse(JSON.stringify(data));
+
+    // Columns Show/Hide
+    const checkboxesArray = Array.from(checkboxes);
+    dataProcessed = hideColumns(dataProcessed, checkboxesArray);
+
+    // Table header
+    generateTableHeader(dataProcessed);
+
+    // Select
+    updateSelectedStatus(dataProcessed);
+
+    // Search
+    updateSearchOptions(checkboxesArray);
+    updateSelectedOption();
+    dataProcessed = applySearchFilter(dataProcessed);
+
+    // Pages
+    updateTablePage(dataProcessed);
 }
 // Call the function on page load
 processData();
