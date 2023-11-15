@@ -84,6 +84,8 @@ function updateSelectedStatus(dataProcessed) {
 
 // Attach a click event listener to the table
 const table = document.getElementById('inventory-table');
+let sortColumn = null;
+let sortAscending = false;
 table.addEventListener('click', function (event) {
     const target = event.target;
     // Check if the clicked element is a cell within a row
@@ -102,8 +104,45 @@ table.addEventListener('click', function (event) {
             }
             processData();
         }
+    } else if (target.tagName === 'TH' && target.parentElement.tagName === 'TR') {
+        // Check if the clicked element is a table header (TH) within a row
+        const columnHeader = target.id.replace("th-", "");
+        // Check if it's the first click on this column
+        if (sortColumn !== columnHeader) {
+          // Set the new column as the sort column
+          sortColumn = columnHeader;
+          sortAscending = true;
+        } else {
+          // It's a second click on the same column, toggle sort order
+          sortAscending = !sortAscending;
+        }
+
+        // Sort the table based on the clicked column and order
+        sortAndPopulateTable(columnHeader, sortAscending);
     }
 });
+
+
+// Function to sort the 'data'  based on the clicked header and populate the table
+function sortAndPopulateTable(columnHeader, ascending) {
+    data.sort(function (a, b) {
+        // Use localeCompare for string comparison
+        const result = a[columnHeader].localeCompare(b[columnHeader]);
+
+        return ascending ? result : -result; // Adjust the sort order
+    });
+    processData();
+}
+
+// Function to add arrow on the clicked TH
+function addArrow(th, ascending) {
+    const arrow = document.createElement('span');
+    arrow.textContent = ascending ? '▲' : '▼';
+    arrow.style.float = 'right';
+    th.appendChild(arrow);
+}
+
+
 
 // Call the function when any of the checkboxes change
 let checkboxes = document.querySelectorAll('#table-controls input[type="checkbox"]');
@@ -131,7 +170,7 @@ function capitalizeFirstLetter(str) {
 }
 
 // Function to generate the table header (thead)
-function generateTableHeader(dataProcessed) {
+function generateTableHeader(dataProcessed, sortColumn, sortAscending) {
     const thead = table.querySelector('thead');
     thead.innerHTML = '';
     const headerRow = document.createElement('tr');
@@ -145,6 +184,11 @@ function generateTableHeader(dataProcessed) {
         header.textContent = capitalizeFirstLetter(headerText);
         // Assign id name to each <th> element
         header.id = 'th-' + headerText.toLowerCase().replace(' ', '-');
+
+        // Add arrow indicators if the current header matches the sortColumn
+        if (headerText === sortColumn) {
+            addArrow(header, sortAscending);
+        }
 
         headerRow.appendChild(header);
     });
@@ -251,7 +295,7 @@ function processData() {
     dataProcessed = hideColumns(dataProcessed, checkboxesArray);
 
     // Table header
-    generateTableHeader(dataProcessed);
+    generateTableHeader(dataProcessed, sortColumn, sortAscending);
 
     // Select
     updateSelectedStatus(dataProcessed);
