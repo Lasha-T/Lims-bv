@@ -35,6 +35,26 @@ h4 {
     color: #b18e60;
     background-color: #e0e0c4;
 }
+h5 {
+    margin: 5px 0;
+    text-align: center;
+    font-family: auto;
+    color: #b18e60;
+}
+
+/* rows and columns */
+.row {
+  width: 100%;
+  display: flex;
+}
+
+.column {
+  padding: 10px 30px;
+}
+
+.column-2 {
+  width: 50%;
+}
 
 .main-container {
     display: flex;

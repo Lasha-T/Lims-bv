@@ -286,6 +286,66 @@ function updateTablePage(dataP) {
     updatePagination(dataP);
 }
 
+function createTableFromSelectedRows(dataProcessed, selected_Ids) {
+    // Get the reference to the div
+    var showSelectedDiv = document.getElementById("showSelected");
+
+    // Empty the div content
+    showSelectedDiv.innerHTML = '';
+
+    // Check if the selected_Ids array is not empty
+    if (selected_Ids.length > 0) {
+        // Create an h5 tag for title dynamically
+        var h5Tag = document.createElement("h5");
+        h5Tag.appendChild(document.createTextNode("Selected"));
+        showSelectedDiv.appendChild(h5Tag);
+
+        // Create a table element
+        var table = document.createElement("table");
+
+        // Create the table header
+        var thead = document.createElement("thead");
+        var headerRow = document.createElement("tr");
+        var headers = ["Name", "Price", "Quantity"];
+
+        headers.forEach(function (header) {
+            var th = document.createElement("th");
+            th.appendChild(document.createTextNode(header));
+            headerRow.appendChild(th);
+        });
+
+        thead.appendChild(headerRow);
+        table.appendChild(thead);
+
+        // Create the table body
+        var tbody = document.createElement("tbody");
+
+        // Filter and add selected rows to the table
+        data.forEach(function (row) {
+            if (selected_Ids.includes(row.id)) {
+                var tr = document.createElement("tr");
+                var columns = ["name", "price", "quantity"];
+
+                columns.forEach(function (column) {
+                    var td = document.createElement("td");
+                    if (['price', 'quantity'].includes(column)) {
+                        td.classList.add('number-columns');
+                    }
+                    td.appendChild(document.createTextNode(row[column]));
+                    tr.appendChild(td);
+                });
+
+                tbody.appendChild(tr);
+            }
+        });
+
+        table.appendChild(tbody);
+
+        // Append the table to the showSelectedDiv
+        showSelectedDiv.appendChild(table);
+    }
+}
+
 // Data processing function
 function processData() {
     let dataProcessed = JSON.parse(JSON.stringify(data));
@@ -297,8 +357,11 @@ function processData() {
     // Table header
     generateTableHeader(dataProcessed, sortColumn, sortAscending);
 
+
     // Select
     updateSelectedStatus(dataProcessed);
+    // show Selected
+    createTableFromSelectedRows(dataProcessed, selected_Ids);
 
     // Search
     updateSearchOptions(checkboxesArray);
@@ -307,6 +370,8 @@ function processData() {
 
     // Pages
     updateTablePage(dataProcessed);
+
+
 }
 // Call the function on page load
 processData();

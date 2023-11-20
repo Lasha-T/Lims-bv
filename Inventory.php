@@ -40,6 +40,16 @@
           <div id="pagination">
               <!-- Page buttons will be added dynamically -->
           </div>
+          <div class="row">
+            <div class="column column-2">
+
+            </div>
+            <div class="column column-2">
+              <div id="showSelected">
+                <!-- table created dynamically -->
+              </div>
+            </div>
+          </div>
           <!-- content ends here -->
         </div>
     </div>
