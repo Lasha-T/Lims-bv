@@ -286,7 +286,7 @@ function updateTablePage(dataP) {
     updatePagination(dataP);
 }
 
-function createTableFromSelectedRows(dataProcessed, selected_Ids) {
+function createTableFromSelectedRows() {
     // Get the reference to the div
     var showSelectedDiv = document.getElementById("showSelected");
 
@@ -361,7 +361,7 @@ function processData() {
     // Select
     updateSelectedStatus(dataProcessed);
     // show Selected
-    createTableFromSelectedRows(dataProcessed, selected_Ids);
+    createTableFromSelectedRows();
 
     // Search
     updateSearchOptions(checkboxesArray);
