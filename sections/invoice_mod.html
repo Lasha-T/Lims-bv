@@ -1,0 +1,34 @@
+<!-- invoice Modal -->
+<div id="createInvoiceModal" class="modal">
+  <button id="closeModalbutton" onclick="closeInvoiceModal()">X</button>
+  <div id="invoiceForm">
+  <h3>Invoice</h3>
+  <div style="font-size:12px;">
+    <p style="float:right;">Date: <span id="invoice-date"></span></p>
+      <p>
+        Company Name<br>
+        Address: Street, City, State<br>
+        Phone: (000) 00-00-00<br>
+        <br>
+      </p>
+  </div>
+  <p style="font-size:14px;">
+    My products:
+  </p>
+
+  <table id="invoiceTable">
+    <thead>
+      <tr>
+        <th style="width: 250px;">Name</th>
+        <th style="width: 100px;">Quantity</th>
+        <th style="width: 100px;">Price</th>
+        <th style="width: 100px;">Summ</th>
+      </tr>
+    </thead>
+    <tbody id="selectedProductsTableBody"></tbody>
+  </table>
+  <p id="totalPriceSum">Total: <span id="totalSum">0.00</span> $</p>
+  </div>
+  <button type="button" id="saveToExcelButton" class="i_button-style">Save to Excel</button>
+</div>
+<div class="modal-overlay" onclick="closeInvoiceModal()"></div>

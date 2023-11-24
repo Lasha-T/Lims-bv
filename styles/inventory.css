@@ -78,12 +78,30 @@ tr:hover {
     text-align: center;
     width: 80px;
 }
-.td-productName {
+.productName {
     font-weight: bold;
 }
 
-
-
+/* Custom button styles  */
+.i_button-style {
+  display: inline-block;
+  color: #5a5442;
+  padding: 3px 8px;
+  margin: 10px 2px;
+  font-size: 12px;
+  cursor: pointer;
+  border: 1px solid #aaa288;
+  border-radius: 10px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.i_button-style:hover {
+  background-color: #dbd8ce99;
+  color: #28251d;
+}
+.i_button-style:active {
+  background-color: transparent;
+  color: #847b5e;
+}
 
 /* pegination buttons style */
 .button-style {
@@ -93,4 +111,46 @@ tr:hover {
 }
 #pagination {
     float: right;
+}
+
+/* Modal styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Overlay background color */
+  z-index: 0;
+}
+.quantity-Input {
+  width: 40px;
+  outline: none;
+  border: none;
+  background: none;
+}
+#totalPriceSum {
+  font-size: 13px;
+  float: right;
+}
+#closeModalbutton {
+  float: right;
+  font-weight: bold;
+  border: none;
+  background: none;
+  cursor: pointer;
 }

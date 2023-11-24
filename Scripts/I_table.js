@@ -170,7 +170,7 @@ function capitalizeFirstLetter(str) {
 }
 
 // Function to generate the table header (thead)
-function generateTableHeader(dataProcessed, sortColumn, sortAscending) {
+function generateTableHeader(dataProcessed) {
     const thead = table.querySelector('thead');
     thead.innerHTML = '';
     const headerRow = document.createElement('tr');
@@ -346,6 +346,42 @@ function createTableFromSelectedRows() {
     }
 }
 
+function createI_Buttons() {
+  // const selected_Ids = /* Set your selected_Ids variable value here */;
+  const buttonContainer = document.getElementById('inventory-buttons');
+  buttonContainer.innerHTML = ''; // Clear previous buttons (if any)
+
+  const buttonNames = ['Purchase', 'Sell', 'Reserve'];
+
+  if (selected_Ids.length >= 1) {
+    // If selected_Ids has a length greater than or equal to 1, create "Create Invoice" button
+    const createInvoiceButton = document.createElement('button');
+    createInvoiceButton.textContent = 'Create Invoice';
+    createInvoiceButton.classList.add('i_button-style');
+    createInvoiceButton.addEventListener('click', () => {
+      // Add logic for the "Create Invoice" button click
+      displayInvoiceModal(selected_Ids);
+    });
+    buttonContainer.appendChild(createInvoiceButton);
+
+    if (selected_Ids.length === 1) {
+      // If selected_Ids has a length of 1, create "Purchase", "Sell", and "Reserve" buttons
+      buttonNames.forEach(buttonName => {
+        const button = document.createElement('button');
+        button.textContent = buttonName;
+        button.classList.add('i_button-style');
+        button.addEventListener('click', () => {
+          // Add logic for the button click
+          alert(`${buttonName} button clicked!`);
+        });
+        buttonContainer.appendChild(button);
+      });
+    }
+  }
+}
+
+
+
 // Data processing function
 function processData() {
     let dataProcessed = JSON.parse(JSON.stringify(data));
@@ -355,7 +391,7 @@ function processData() {
     dataProcessed = hideColumns(dataProcessed, checkboxesArray);
 
     // Table header
-    generateTableHeader(dataProcessed, sortColumn, sortAscending);
+    generateTableHeader(dataProcessed);
 
 
     // Select
@@ -371,6 +407,7 @@ function processData() {
     // Pages
     updateTablePage(dataProcessed);
 
+    createI_Buttons();
 
 }
 // Call the function on page load

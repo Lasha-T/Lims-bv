@@ -40,6 +40,11 @@
           <div id="pagination">
               <!-- Page buttons will be added dynamically -->
           </div>
+          <div id="inventory-buttons">
+            <!--  buttons will be added dynamically -->
+          </div>
+          <?php include "sections\invoice_mod.html" ?>
+
           <div class="row">
             <div class="column column-2">
 
@@ -59,5 +64,7 @@
 </script>
 <script src="Scripts/menu.js"></script>
 <script src="Scripts/I_table.js"></script>
+<script src="Scripts/invoice_mod.js"></script>
+<script src="Scripts/saveToExcel.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@ header {
     margin-right: 10px;
 }
 
-header h3 {
+h3 {
     font-size: medium;
     text-align: center;
     flex-grow: 1;
