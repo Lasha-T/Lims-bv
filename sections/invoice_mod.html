@@ -1,6 +1,6 @@
 <!-- invoice Modal -->
 <div id="createInvoiceModal" class="modal">
-  <button id="closeModalbutton" onclick="closeInvoiceModal()">X</button>
+  <button class="closeModalbutton" onclick="closeInvoiceModal()">X</button>
   <div id="invoiceForm">
   <h3>Invoice</h3>
   <div style="font-size:12px;">
@@ -13,7 +13,7 @@
       </p>
   </div>
   <p style="font-size:14px;">
-    My products:
+    Products list:
   </p>
 
   <table id="invoiceTable">
@@ -31,4 +31,4 @@
   </div>
   <button type="button" id="saveToExcelButton" class="i_button-style">Save to Excel</button>
 </div>
-<div class="modal-overlay" onclick="closeInvoiceModal()"></div>
+<div class="modal-overlay" id="mo1" onclick="closeInvoiceModal()"></div>

@@ -5,17 +5,18 @@ function appendCurrentDate() {
   const month = (currentDate.getMonth() + 1).toString().padStart(2, '0');
   const year = currentDate.getFullYear();
 
-  const formattedDate = `${day} / ${month} / ${year}`;
+  const formattedDate = `${day}.${month}.${year}`;
 
-  // Set the content of the "invoice-date" span
-  document.getElementById("invoice-date").innerText = formattedDate;
+  return formattedDate;
 }
 
 function displayInvoiceModal(selectedProducts) {
-  appendCurrentDate();
+  // Set the content of the "invoice-date" span
+  document.getElementById("invoice-date").innerText = appendCurrentDate();
+
 
   const modal = document.getElementById('createInvoiceModal');
-  const overlay = document.querySelector('.modal-overlay');
+  const overlay = document.getElementById('mo1');
   const selectedProductsTableBody = document.getElementById('selectedProductsTableBody');
   const totalSumSpan = document.getElementById('totalSum');
 
@@ -26,7 +27,7 @@ function displayInvoiceModal(selectedProducts) {
   selectedProducts.forEach(product => {
     const row = document.createElement('tr');
 
-    // Extract data from the 'data' array based on the product id (assuming 'data' is defined elsewhere)
+    // Extract data from the 'data' array based on the product id
     const productData = data.find(item => item.id === product);
 
     const nameCell = document.createElement('td');
@@ -92,7 +93,7 @@ function updateTotalPrice(row, price, totalSumSpan) {
 
 function closeInvoiceModal() {
   const modal = document.getElementById('createInvoiceModal');
-  const overlay = document.querySelector('.modal-overlay');
+  const overlay = document.getElementById('mo1');
 
   // Hide the modal and overlay
   modal.style.display = 'none';

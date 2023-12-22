@@ -17,9 +17,9 @@ header {
     padding: 5px 5px;
 }
 
-#logout-button {
+/* #logout-button {
     margin-right: 10px;
-}
+} */
 
 h3 {
     font-size: medium;
@@ -117,4 +117,38 @@ h5 {
     font-size: 18px;
     font-weight: bold;
     color: white;
+}
+
+/* tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+}
+
+th {
+    background-color: #aba287;
+    color: #fff;
+    font-size: 12px;
+}
+
+td {
+    font-size: 12px;
+}
+
+/* styles for specific columns of table */
+.number-columns {
+    text-align: center;
+    width: 80px;
+}
+.productName {
+    font-weight: bold;
 }

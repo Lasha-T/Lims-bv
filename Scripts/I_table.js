@@ -213,6 +213,10 @@ function generateTableRow(item) {
             return; // Skip creating a cell for 'id' column
         }
 
+        if (colName === 'name') {
+            cell.classList.add('productName');
+        }
+
         if (colName === 'selected') {
             if(colValue == 1)
               row.classList.add('selectedRow');
@@ -371,8 +375,11 @@ function createI_Buttons() {
         button.textContent = buttonName;
         button.classList.add('i_button-style');
         button.addEventListener('click', () => {
-          // Add logic for the button click
-          alert(`${buttonName} button clicked!`);
+          // Add logic for buttons
+          if(buttonName === 'Purchase')
+            displayPurchaseModal(selected_Ids);
+          else
+            alert(`${buttonName} button clicked!`);
         });
         buttonContainer.appendChild(button);
       });

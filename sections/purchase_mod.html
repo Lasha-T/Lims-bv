@@ -1,0 +1,36 @@
+<!-- Purchase Modal -->
+<div id="purchaseModal" class="modal">
+  <button class="closeModalbutton" onclick="closePurchaseModal()">X</button>
+  <!-- Modal content -->
+  <h3>Purchase</h3>
+  <div id="purchase_Form">
+      <form id="purchaseForm" onsubmit="return validateForm()">
+        <label for="purchasedate">Date</label>
+        <input type="text" id="purchasedate" name="purchasedate" required>
+        <br>
+
+        <label for="productName">Product Name</label>
+        <input type="text" id="productName" name="productName" readonly>
+        <br>
+
+        <label for="sellerName">Seller Name</label>
+        <input type="text" id="sellerName" name="sellerName" required>
+        <br>
+
+        <label for="quantity">Quantity</label>
+        <input type="number" min=1 id="quantity" name="quantity" required oninput="updateTotal()">
+        <br>
+
+        <label for="price">Price</label>
+        <input type="number" min=1 id="price" name="price" required oninput="updateTotal()">
+        <br>
+
+        <label for="totalPrice">Total Price</label>
+        <input type="number" id="totalPrice" name="totalPrice" readonly>
+        <br>
+
+        <button class="i_button-style" type="submit" onclick="purchaseProduct()">Purchase</button>
+      </form>
+  </div>
+</div>
+<div class="modal-overlay" id="mo2" onclick="closePurchaseModal()"></div>

@@ -35,29 +35,7 @@
     margin-right: 6px;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-}
 
-table, th, td {
-    border: 1px solid #ccc;
-}
-
-th, td {
-    padding: 10px;
-    text-align: left;
-}
-
-th {
-    background-color: #aba287;
-    color: #fff;
-    font-size: 12px;
-}
-
-td {
-    font-size: 12px;
-}
 
 tr:nth-child(even) {
     background-color: #f2f2f2;
@@ -73,14 +51,7 @@ tr:hover {
     background-color: #8d7dad;
 }
 
-/* styles for specific columns */
-.number-columns {
-    text-align: center;
-    width: 80px;
-}
-.productName {
-    font-weight: bold;
-}
+
 
 /* Custom button styles  */
 .i_button-style {
@@ -137,6 +108,31 @@ tr:hover {
   background: rgba(0, 0, 0, 0.5); /* Overlay background color */
   z-index: 0;
 }
+.closeModalbutton {
+  float: right;
+  font-weight: bold;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+#purchase_Form{
+  font-size: 13px;
+}
+#purchase_Form input{
+  font-size: 12px;
+  width: 92%;
+  padding: 3px 8px;
+  margin-top: 3px;
+  margin-bottom: 10px;
+  border-radius: 3px;
+  border: 1px solid #aaa288;
+  outline: none;
+}
+input[readonly] {
+    background-color: #f4f4f4;
+    color: #555;
+    cursor: not-allowed;
+}
 .quantity-Input {
   width: 40px;
   outline: none;
@@ -146,11 +142,4 @@ tr:hover {
 #totalPriceSum {
   font-size: 13px;
   float: right;
-}
-#closeModalbutton {
-  float: right;
-  font-weight: bold;
-  border: none;
-  background: none;
-  cursor: pointer;
 }

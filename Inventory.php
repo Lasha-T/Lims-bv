@@ -44,6 +44,7 @@
             <!--  buttons will be added dynamically -->
           </div>
           <?php include "sections\invoice_mod.html" ?>
+          <?php include "sections\purchase_mod.html" ?>
 
           <div class="row">
             <div class="column column-2">
@@ -66,5 +67,6 @@
 <script src="Scripts/I_table.js"></script>
 <script src="Scripts/invoice_mod.js"></script>
 <script src="Scripts/saveToExcel.js"></script>
+<script src="Scripts/purchase_mod.js"></script>
 </body>
 </html>
