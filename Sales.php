@@ -12,9 +12,9 @@
 
         <div class="container">
           <!-- content starts from here-->
-          <h4>Purchases</h4>
+          <h4>Sales</h4>
 
-          <?php include 'database/getP_Data.php'; ?>
+          <?php include 'database/getS_Data.php'; ?>
 
           <!-- content ends here -->
         </div>

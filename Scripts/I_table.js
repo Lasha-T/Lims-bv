@@ -376,10 +376,10 @@ function createI_Buttons() {
         button.classList.add('i_button-style');
         button.addEventListener('click', () => {
           // Add logic for buttons
-          if(buttonName === 'Purchase')
-            displayPurchaseModal(selected_Ids);
+          if(buttonName === 'Purchase' || buttonName === 'Sell')
+            displayTransactionModal(selected_Ids, buttonName);
           else
-            alert(`${buttonName} button clicked!`);
+            alert(`${buttonName} function is not implemented in base version!`);
         });
         buttonContainer.appendChild(button);
       });

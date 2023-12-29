@@ -115,10 +115,10 @@ tr:hover {
   background: none;
   cursor: pointer;
 }
-#purchase_Form{
+#transaction_Form{
   font-size: 13px;
 }
-#purchase_Form input{
+#transaction_Form input{
   font-size: 12px;
   width: 92%;
   padding: 3px 8px;

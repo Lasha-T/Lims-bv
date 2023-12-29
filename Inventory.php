@@ -7,11 +7,11 @@
 </head>
 <body>
   <!-- Include the PHP file to set the PHP variable -->
-<?php include 'database\getI_Data.php'; ?>
+<?php include 'database/getI_Data.php'; ?>
 
-  <?php include "sections\header.html" ?>
+  <?php include "sections/header.html" ?>
     <div class="main-container">
-      <?php include "sections\menu.html" ?>
+      <?php include "sections/menu.html" ?>
 
         <div class="container">
           <!-- content starts from here-->
@@ -43,8 +43,8 @@
           <div id="inventory-buttons">
             <!--  buttons will be added dynamically -->
           </div>
-          <?php include "sections\invoice_mod.html" ?>
-          <?php include "sections\purchase_mod.html" ?>
+          <?php include "sections/invoice_mod.html" ?>
+          <?php include "sections/trans_mod.html" ?>
 
           <div class="row">
             <div class="column column-2">
@@ -67,6 +67,6 @@
 <script src="Scripts/I_table.js"></script>
 <script src="Scripts/invoice_mod.js"></script>
 <script src="Scripts/saveToExcel.js"></script>
-<script src="Scripts/purchase_mod.js"></script>
+<script src="Scripts/trans_mod.js"></script>
 </body>
 </html>
