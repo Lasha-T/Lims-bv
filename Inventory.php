@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>LimsBV</title>
+    <link rel="shortcut icon" href="favicon.ico">
     <link rel="stylesheet" type="text/css" href="styles/shared.css">
     <link rel="stylesheet" type="text/css" href="styles/inventory.css">
 </head>
@@ -63,10 +64,10 @@
 <script>
     var data = <?php echo $dataVariable; ?>;
 </script>
-<script src="Scripts/menu.js"></script>
-<script src="Scripts/I_table.js"></script>
-<script src="Scripts/invoice_mod.js"></script>
-<script src="Scripts/saveToExcel.js"></script>
-<script src="Scripts/trans_mod.js"></script>
+<script src="scripts/menu.js"></script>
+<script src="scripts/I_table.js"></script>
+<script src="scripts/invoice_mod.js"></script>
+<script src="scripts/saveToExcel.js"></script>
+<script src="scripts/trans_mod.js"></script>
 </body>
 </html>
